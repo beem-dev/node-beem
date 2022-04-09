@@ -42,10 +42,7 @@ describe('SMS API', () => {
     });
 
     it('Get sender names', async () => {
-      const beem = new SMS(
-        '9dd7fa924935d7db',
-        'ZmMyM2JiYTc2N2EzYzJhNDI2ZGU3MTI3ZWZhNGQ0MDYzZmZkZWM5MjdlMDhjZTJhNzRhYjZjNjAwY2EzYjY1MA=='
-      );
+      const beem = new SMS(process.env.BEEM_SECRET, process.env.BEEM_API_KEY);
 
       const response = await beem.getSenderNames();
 
@@ -66,10 +63,7 @@ describe('SMS API', () => {
     });
 
     it('Should fail from Invalid message', async () => {
-      const beem = new SMS(
-        '9dd7fa924935d7db',
-        'ZmMyM2JiYTc2N2EzYzJhNDI2ZGU3MTI3ZWZhNGQ0MDYzZmZkZWM5MjdlMDhjZTJhNzRhYjZjNjAwY2EzYjY1MA=='
-      );
+      const beem = new SMS(process.env.BEEM_SECRET, process.env.BEEM_API_KEY);
 
       const response = await beem.sendSMS(invalidSms);
 
@@ -80,10 +74,7 @@ describe('SMS API', () => {
     });
 
     it('Should send SMS successfully', async () => {
-      const beem = new SMS(
-        '9dd7fa924935d7db',
-        'ZmMyM2JiYTc2N2EzYzJhNDI2ZGU3MTI3ZWZhNGQ0MDYzZmZkZWM5MjdlMDhjZTJhNzRhYjZjNjAwY2EzYjY1MA=='
-      );
+      const beem = new SMS(process.env.BEEM_SECRET, process.env.BEEM_API_KEY);
 
       const response = await beem.sendSMS(sms);
 
