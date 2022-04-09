@@ -1,4 +1,3 @@
-// import fetch, {Response} from 'node-fetch';
 import { OTP } from '../src';
 
 describe('OTP API', () => {
@@ -6,7 +5,7 @@ describe('OTP API', () => {
     it('Should fail from empty credentials entered', async () => {
       const beem = new OTP(0, '', '');
 
-      const response = await beem.request_otp('');
+      const response = await beem.requestOtp('');
 
       expect(response).toEqual({
         code: 120,
@@ -17,7 +16,7 @@ describe('OTP API', () => {
     it('Should fail from invalid credentials entered', async () => {
       const beem = new OTP(0, 'invalid_key', 'invalid_secret');
 
-      const response = await beem.request_otp('');
+      const response = await beem.requestOtp('');
 
       expect(response).toEqual({
         code: 120,
@@ -32,7 +31,7 @@ describe('OTP API', () => {
         'ZmMyM2JiYTc2N2EzYzJhNDI2ZGU3MTI3ZWZhNGQ0MDYzZmZkZWM5MjdlMDhjZTJhNzRhYjZjNjAwY2EzYjY1MA=='
       );
 
-      const response = await beem.request_otp('254712345678');
+      const response = await beem.requestOtp('254712345678');
 
       console.log(response);
 
@@ -50,13 +49,14 @@ describe('OTP API', () => {
 
   describe('Verify OTP', () => {
     it('Should fail due to invalid pin entered', async () => {
+      // TODO: Don't push this to github
       const beem = new OTP(
         451,
         '9dd7fa924935d7db',
         'ZmMyM2JiYTc2N2EzYzJhNDI2ZGU3MTI3ZWZhNGQ0MDYzZmZkZWM5MjdlMDhjZTJhNzRhYjZjNjAwY2EzYjY1MA=='
       );
 
-      const response = await beem.verify_otp(0, '');
+      const response = await beem.verifyOtp(0, '');
 
       expect(response).toEqual({
         error: true,
@@ -65,22 +65,3 @@ describe('OTP API', () => {
     });
   });
 });
-
-// jest.mock('node-fetch');
-
-// async function makeRequest() {
-//     const res = await fetch("https://httpbin.org/get");
-//     return await res.json();
-// }
-
-// describe('fetch-mock test', () => {
-//     const mockFetch = fetch as jest.MockedFunction<typeof fetch>;
-
-//     it('check fetch mock test', async () => {
-//         const json = jest.fn() as jest.MockedFunction<any>;
-//         json.mockResolvedValue({status: 200});
-//         mockFetch.mockResolvedValue({ok: true, json} as Response);
-//         await makeRequest();
-//         expect(json.mock.calls.length).toBe(1);
-//     })
-// })
