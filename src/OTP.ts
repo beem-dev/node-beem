@@ -35,31 +35,28 @@ export class OTP {
         appId: this.app_id,
         msisdn: phone_number,
       }),
-    }).then(response => response.json());
+    }).then(data => data.json());
 
     return response;
   }
 
-  static async verify_otp(
-    pin: string,
+  public async verify_otp(
+    pin: number,
     pin_id: string,
-    api_key: string,
-    secret_key: string
-  ) {
-    const auth = Buffer.from(api_key + ':' + secret_key).toString('base64');
+  ): Promise<IOTPResponse> {
 
     const response = await fetch(OTP_VERIFY_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: 'Basic ' + auth,
+        Authorization: 'Basic ' + this.auth,
       },
       body: JSON.stringify({
         pinId: pin_id,
         pin: pin,
       }),
-    });
-    const data = await response.json();
-    return data;
+    }).then(data => data.json());
+
+    return response;
   }
 }
