@@ -1,5 +1,9 @@
 import { OTP } from '../src';
 
+const beemAppId = Number(process.env.BEEM_APP_ID || '');
+const beemSecret = process.env.BEEM_SECRET || '';
+const beemApiKey = process.env.BEEM_API_KEY || '';
+
 describe('OTP API', () => {
   describe('Request OTP', () => {
     it('Should fail from empty credentials entered', async () => {
@@ -25,15 +29,11 @@ describe('OTP API', () => {
     });
 
     it('Should send OTP successfully', async () => {
-      const beem = new OTP(
-        Number(process.env.BEEM_APP_ID),
-        process.env.BEEM_SECRET,
-        process.env.BEEM_API_KEY
-      );
+      const beem = new OTP(beemAppId, beemSecret, beemApiKey);
 
       const response = await beem.requestOtp('254712345678');
 
-      console.log(response);
+      expect(response).toBeTruthy();
 
       // expect(response).toEqual({
       //   data: {
@@ -49,11 +49,7 @@ describe('OTP API', () => {
 
   describe('Verify OTP', () => {
     it('Should fail due to invalid pin entered', async () => {
-      const beem = new OTP(
-        Number(process.env.BEEM_APP_ID),
-        process.env.BEEM_SECRET,
-        process.env.BEEM_API_KEY
-      );
+      const beem = new OTP(beemAppId, beemSecret, beemApiKey);
 
       const response = await beem.verifyOtp(0, '');
 

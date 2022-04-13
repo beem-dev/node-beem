@@ -1,31 +1,5 @@
 import { SMS } from '../src';
-import { ISMSRequest } from '../src/interfaces/sms.interface';
-
-const invalidSms: ISMSRequest = {
-  source_addr: '',
-  schedule_time: '',
-  encoding: 0,
-  message: '',
-  recipients: [
-    {
-      recipient_id: 0,
-      dest_addr: '',
-    },
-  ],
-};
-
-const sms: ISMSRequest = {
-  source_addr: 'INFO',
-  schedule_time: '',
-  encoding: 0,
-  message: 'Hello world',
-  recipients: [
-    {
-      recipient_id: 1,
-      dest_addr: '255746821320',
-    },
-  ],
-};
+import { beemApiKey, beemSecret, invalidSms, sms } from './fixture';
 
 // create unit test for SMS
 describe('SMS API', () => {
@@ -42,11 +16,11 @@ describe('SMS API', () => {
     });
 
     it('Get sender names', async () => {
-      const beem = new SMS(process.env.BEEM_SECRET, process.env.BEEM_API_KEY);
+      const beem = new SMS(beemSecret, beemApiKey);
 
       const response = await beem.getSenderNames();
 
-      console.log(response);
+      expect(response).toBeTruthy();
 
       // expect(response).toEqual({
       //   code: 0,
@@ -63,7 +37,7 @@ describe('SMS API', () => {
     });
 
     it('Should fail from Invalid message', async () => {
-      const beem = new SMS(process.env.BEEM_SECRET, process.env.BEEM_API_KEY);
+      const beem = new SMS(beemSecret, beemApiKey);
 
       const response = await beem.sendSMS(invalidSms);
 
@@ -74,11 +48,9 @@ describe('SMS API', () => {
     });
 
     it('Should send SMS successfully', async () => {
-      const beem = new SMS(process.env.BEEM_SECRET, process.env.BEEM_API_KEY);
+      const beem = new SMS(beemSecret, beemApiKey);
 
       const response = await beem.sendSMS(sms);
-
-      console.log(response);
 
       expect(response).toEqual({
         successful: true,

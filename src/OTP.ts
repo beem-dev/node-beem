@@ -40,11 +40,7 @@ export class OTP {
     return response;
   }
 
-  public async verifyOtp(
-    pin: number,
-    pinId: string,
-  ): Promise<IOTPResponse> {
-
+  public async verifyOtp(pin: number, pinId: string): Promise<IOTPResponse> {
     const response = await fetch(OTP_VERIFY_URL, {
       method: 'POST',
       headers: {
